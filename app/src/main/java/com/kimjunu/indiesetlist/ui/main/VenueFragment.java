@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.kimjunu.indiesetlist.R;
 import com.kimjunu.indiesetlist.model.ArtistModel;
+import com.kimjunu.indiesetlist.model.PerformModel;
 import com.kimjunu.indiesetlist.model.VenueModel;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class VenueFragment extends Fragment implements TextWatcher {
 
     RecyclerView.LayoutManager mLayoutManager = null;
 
+    ArrayList<PerformModel> mPerformList = new ArrayList<>();
     ArrayList<VenueModel> mVenueList = new ArrayList<>();
 
     public static VenueFragment newInstance(Bundle bundle) {
@@ -67,15 +69,21 @@ public class VenueFragment extends Fragment implements TextWatcher {
 
         etSearch.addTextChangedListener(this);
 
-        updateVenueList("");
+        updateVenueList(etSearch.getText().toString());
 
         return root;
+    }
+
+    public void setPerformList(ArrayList<PerformModel> itemList) {
+        mPerformList = itemList;
+
+        updateVenueList(etSearch.getText().toString());
     }
 
     public void setVenueList(ArrayList<VenueModel> itemList) {
         mVenueList = itemList;
 
-        updateVenueList("");
+        updateVenueList(etSearch.getText().toString());
     }
 
     private void updateVenueList(String artistName) {
@@ -90,6 +98,7 @@ public class VenueFragment extends Fragment implements TextWatcher {
         }
 
         mVenueAdapter.setVenueList(venueList);
+        mVenueAdapter.setPerformList(mPerformList);
         mVenueAdapter.notifyDataSetChanged();
     }
 

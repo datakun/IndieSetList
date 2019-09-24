@@ -30,8 +30,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/view_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="2015년 11월 28일, 제비다방"
-                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvArtist" />
 
@@ -40,8 +41,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_margin"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="2015년 11월 30일, 제비다방"
-                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEvent1" />
 

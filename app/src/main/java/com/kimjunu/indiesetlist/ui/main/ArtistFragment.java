@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.kimjunu.indiesetlist.App;
 import com.kimjunu.indiesetlist.R;
 import com.kimjunu.indiesetlist.model.ArtistModel;
+import com.kimjunu.indiesetlist.model.PerformModel;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,7 @@ public class ArtistFragment extends Fragment implements TextWatcher {
 
     RecyclerView.LayoutManager mLayoutManager = null;
 
+    ArrayList<PerformModel> mPerformList = new ArrayList<>();
     ArrayList<ArtistModel> mArtistList = new ArrayList<>();
 
     public static ArtistFragment newInstance(Bundle bundle) {
@@ -69,15 +71,21 @@ public class ArtistFragment extends Fragment implements TextWatcher {
 
         etSearch.addTextChangedListener(this);
 
-        updateArtistList("");
+        updateArtistList(etSearch.getText().toString());
 
         return root;
+    }
+
+    public void setPerformList(ArrayList<PerformModel> itemList) {
+        mPerformList = itemList;
+
+        updateArtistList(etSearch.getText().toString());
     }
 
     public void setArtistList(ArrayList<ArtistModel> itemList) {
         mArtistList = itemList;
 
-        updateArtistList("");
+        updateArtistList(etSearch.getText().toString());
     }
 
     private void updateArtistList(String artistName) {
@@ -92,6 +100,7 @@ public class ArtistFragment extends Fragment implements TextWatcher {
         }
 
         mArtistAdapter.setArtistList(artistList);
+        mArtistAdapter.setPerformList(mPerformList);
         mArtistAdapter.notifyDataSetChanged();
     }
 

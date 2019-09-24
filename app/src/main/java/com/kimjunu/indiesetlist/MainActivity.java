@@ -17,6 +17,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.kimjunu.indiesetlist.model.ArtistModel;
 import com.kimjunu.indiesetlist.model.EventModel;
+import com.kimjunu.indiesetlist.model.PerformModel;
 import com.kimjunu.indiesetlist.model.VenueModel;
 import com.kimjunu.indiesetlist.ui.main.ArtistFragment;
 import com.kimjunu.indiesetlist.ui.main.DateFragment;
@@ -26,6 +27,8 @@ import com.kimjunu.indiesetlist.ui.main.ViewPagerAdapter;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<EventModel> mEventList = new ArrayList<>();
     ArrayList<ArtistModel> mArtistList = new ArrayList<>();
     ArrayList<VenueModel> mVenueList = new ArrayList<>();
+    ArrayList<PerformModel> mPerformList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,53 +160,134 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        db.collection(App.ARGS_ARTISTS)
-                .orderBy("name")
+        // 모든 음악가 가져오기
+//        db.collection(App.ARGS_ARTISTS)
+//                .orderBy("name")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful() && task.getResult() != null) {
+//                            mArtistList.clear();
+//
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                ArtistModel artist = new ArtistModel();
+//                                artist.id = document.getId();
+//                                artist.name = document.get("name").toString();
+//                                mArtistList.add(artist);
+//                            }
+//
+//                            if (mArtistFragment != null)
+//                                mArtistFragment.setArtistList(mArtistList);
+//                        } else {
+//                            Log.e(TAG, "Error getting artist documents.", task.getException());
+//                        }
+//                    }
+//                });
+
+        db.collection(App.ARGS_PERFORMANCE)
+                .orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
                             mArtistList.clear();
-
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                ArtistModel artist = new ArtistModel();
-                                artist.id = document.getId();
-                                artist.name = document.get("name").toString();
-                                mArtistList.add(artist);
-                            }
-
-                            if (mArtistFragment != null)
-                                mArtistFragment.setArtistList(mArtistList);
-                        } else {
-                            Log.e(TAG, "Error getting artist documents.", task.getException());
-                        }
-                    }
-                });
-
-        db.collection(App.ARGS_VENUES)
-                .orderBy("name")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
                             mVenueList.clear();
+                            mPerformList.clear();
 
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                // 연주 추가
+                                HashMap<String, Object> artist_item = (HashMap<String, Object>) document.get("artist");
+                                HashMap<String, Object> venue_item = (HashMap<String, Object>) document.get("venue");
+                                HashMap<String, Object> video_item = (HashMap<String, Object>) document.get("video");
+                                PerformModel perform = new PerformModel();
+                                perform.id = document.getId();
+                                perform.artist = artist_item.get("name").toString();
+                                perform.date = document.get("date").toString();
+                                perform.venue = venue_item.get("name").toString();
+                                perform.videoId = video_item.get("id").toString();
+                                perform.videoTitle = video_item.get("title").toString();
+
+                                mPerformList.add(perform);
+
+                                // 음악가 추가
+                                ArtistModel artist = new ArtistModel();
+                                artist.id = artist_item.get("id").toString();
+                                artist.name = artist_item.get("name").toString();
+
+                                boolean isFound = false;
+                                for (ArtistModel model : mArtistList) {
+                                    if (model.name.equals(artist.name)) {
+                                        isFound = true;
+
+                                        break;
+                                    }
+                                }
+
+                                if (isFound == false)
+                                    mArtistList.add(artist);
+
+                                // 공연장 추가
                                 VenueModel venue = new VenueModel();
-                                venue.id = document.getId();
-                                venue.name = document.get("name").toString();
-                                mVenueList.add(venue);
+                                venue.id = venue_item.get("id").toString();
+                                venue.name = venue_item.get("name").toString();
+
+                                isFound = false;
+                                for (VenueModel model : mVenueList) {
+                                    if (model.name.equals(venue.name)) {
+                                        isFound = true;
+
+                                        break;
+                                    }
+                                }
+
+
+                                if (isFound == false)
+                                    mVenueList.add(venue);
                             }
 
-                            if (mVenueFragment != null)
+                            if (mArtistFragment != null) {
+                                Collections.sort(mArtistList, new AscendingArtist());
+                                mArtistFragment.setArtistList(mArtistList);
+                                mArtistFragment.setPerformList(mPerformList);
+                            }
+
+                            if (mVenueFragment != null) {
+                                Collections.sort(mVenueList, new AscendingVenue());
                                 mVenueFragment.setVenueList(mVenueList);
+                                mVenueFragment.setPerformList(mPerformList);
+                            }
                         } else {
                             Log.e(TAG, "Error getting venue documents.", task.getException());
                         }
                     }
                 });
+
+        // 모든 공연장 가져오기
+//        db.collection(App.ARGS_VENUES)
+//                .orderBy("name")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful() && task.getResult() != null) {
+//                            mVenueList.clear();
+//
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                VenueModel venue = new VenueModel();
+//                                venue.id = document.getId();
+//                                venue.name = document.get("name").toString();
+//                                mVenueList.add(venue);
+//                            }
+//
+//                            if (mVenueFragment != null)
+//                                mVenueFragment.setVenueList(mVenueList);
+//                        } else {
+//                            Log.e(TAG, "Error getting venue documents.", task.getException());
+//                        }
+//                    }
+//                });
     }
 
     @Override
@@ -211,6 +296,20 @@ public class MainActivity extends AppCompatActivity {
             mDateFragment.onLayoutCalendarClicked();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    class AscendingArtist implements Comparator<ArtistModel> {
+        @Override
+        public int compare(ArtistModel a, ArtistModel b) {
+            return a.name.compareTo(b.name);
+        }
+    }
+
+    class AscendingVenue implements Comparator<VenueModel> {
+        @Override
+        public int compare(VenueModel a, VenueModel b) {
+            return a.name.compareTo(b.name);
         }
     }
 }

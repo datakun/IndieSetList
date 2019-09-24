@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,11 +22,7 @@ import com.kimjunu.indiesetlist.App;
 import com.kimjunu.indiesetlist.PerformListActivity;
 import com.kimjunu.indiesetlist.R;
 import com.kimjunu.indiesetlist.model.ArtistModel;
-import com.kimjunu.indiesetlist.model.EventModel;
 import com.kimjunu.indiesetlist.model.PerformModel;
-import com.nex3z.flowlayout.FlowLayout;
-
-import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,9 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>  {
+public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder> {
     private static final String TAG = "EventAdapter";
 
+    ArrayList<PerformModel> mPerformList = new ArrayList<>();
     ArrayList<ArtistModel> mArtistList = new ArrayList<>();
 
     Context mContext = null;
@@ -120,6 +116,10 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         }
     }
 
+    public void setPerformList(ArrayList<PerformModel> itemList) {
+        mPerformList = itemList;
+    }
+
     public void setArtistList(ArrayList<ArtistModel> itemList) {
         mArtistList = itemList;
     }
@@ -139,8 +139,21 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
         ArtistModel artist = mArtistList.get(position);
 
         holder.tvArtist.setText(artist.name);
-//        holder.tvEvent1.setText(event.venue.name);
-//        holder.tvEvent2.setText(event.venue.name);
+
+        int recentCount = 2;
+        for (PerformModel model : mPerformList) {
+            if (model.artist.equals(artist.name)) {
+                recentCount--;
+
+                if (recentCount == 1)
+                    holder.tvEvent1.setText(model.videoTitle);
+                else if (recentCount == 0)
+                    holder.tvEvent2.setText(model.videoTitle);
+            }
+
+            if (recentCount == 0)
+                break;
+        }
     }
 
     @Override

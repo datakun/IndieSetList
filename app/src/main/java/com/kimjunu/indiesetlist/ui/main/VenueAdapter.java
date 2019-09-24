@@ -21,7 +21,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.kimjunu.indiesetlist.App;
 import com.kimjunu.indiesetlist.PerformListActivity;
 import com.kimjunu.indiesetlist.R;
-import com.kimjunu.indiesetlist.model.ArtistModel;
 import com.kimjunu.indiesetlist.model.PerformModel;
 import com.kimjunu.indiesetlist.model.VenueModel;
 
@@ -32,9 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueViewHolder>  {
+public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueViewHolder> {
     private static final String TAG = "EventAdapter";
 
+    ArrayList<PerformModel> mPerformList = new ArrayList<>();
     ArrayList<VenueModel> mVenueList = new ArrayList<>();
 
     Context mContext = null;
@@ -116,6 +116,10 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueViewHol
         }
     }
 
+    public void setPerformList(ArrayList<PerformModel> itemList) {
+        mPerformList = itemList;
+    }
+
     public void setVenueList(ArrayList<VenueModel> itemList) {
         mVenueList = itemList;
     }
@@ -135,8 +139,21 @@ public class VenueAdapter extends RecyclerView.Adapter<VenueAdapter.VenueViewHol
         VenueModel venue = mVenueList.get(position);
 
         holder.tvVenue.setText(venue.name);
-//        holder.tvEvent1.setText(event.venue.name);
-//        holder.tvEvent2.setText(event.venue.name);
+
+        int recentCount = 2;
+        for (PerformModel model : mPerformList) {
+            if (model.venue.equals(venue.name)) {
+                recentCount--;
+
+                if (recentCount == 1)
+                    holder.tvEvent1.setText(model.videoTitle);
+                else if (recentCount == 0)
+                    holder.tvEvent2.setText(model.videoTitle);
+            }
+
+            if (recentCount == 0)
+                break;
+        }
     }
 
     @Override
