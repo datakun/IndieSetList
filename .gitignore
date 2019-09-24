@@ -378,3 +378,5 @@ obj/
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/java,linux,macos,windows,android,intellij,androidstudio
+/app/src/main/java/com/kimjunu/indiesetlist/Developer.java
+/app/google-services.json
