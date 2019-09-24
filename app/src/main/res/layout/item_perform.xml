@@ -40,6 +40,7 @@
                 android:id="@+id/tvVenue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:layout_marginTop="@dimen/view_margin"
                 android:text="현대카드 언더스테이지"
                 app:layout_constraintRight_toRightOf="parent"
