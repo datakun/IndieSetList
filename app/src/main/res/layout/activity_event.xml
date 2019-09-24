@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerformListActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutPerformList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/view_margin"
+            android:text="2019년 9월 19일, 공연장" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPerform"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
+    <com.kimjunu.indiesetlist.ui.custom.FlingLinearLayout
+        android:id="@+id/layoutVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/fab_size"
+            android:layout_height="@dimen/fab_size"
+            android:layout_gravity="right"
+            android:src="@drawable/ic_close_black_24dp"
+            android:tint="@android:color/white" />
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youTubePlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--<fragment-->
+        <!--android:id="@+id/videoFragmentContainer"-->
+        <!--class="com.kimjunu.indiesetlist.PerformListActivity$VideoFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+
+    </com.kimjunu.indiesetlist.ui.custom.FlingLinearLayout>
+
+</FrameLayout>

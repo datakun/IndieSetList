@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Indie SetList</string>
+    <string name="title_date">Date</string>
+    <string name="title_artists">Artists</string>
+    <string name="title_venues">Venues</string>
+
+    <string name="msg_enter_artist_name">Enter artist name.</string>
+    <string name="msg_enter_venue_name">Enter venue name.</string>
+
+    <string name="msg_exiting">Press the \'Back\' button one more time to exit this app.</string>
+    <string name="msg_error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+</resources>

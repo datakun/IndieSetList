@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Indie SetList</string>
+    <string name="msg_enter_artist_name">음악가 이름을 입력하세요.</string>
+    <string name="msg_enter_venue_name">공연장 이름을 입력하세요.</string>
+    <string name="msg_error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+    <string name="msg_exiting">앱을 종료하려면 \'뒤로\' 버튼을 한 번 더 누르세요.</string>
+    <string name="title_artists">음악가</string>
+    <string name="title_date">공연날짜</string>
+    <string name="title_venues">공연장</string>
+</resources>
