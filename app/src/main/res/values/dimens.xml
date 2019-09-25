@@ -6,8 +6,11 @@
     <dimen name="view_margin">8dp</dimen>
     <dimen name="small_margin">4dp</dimen>
     <dimen name="card_radius">4dp</dimen>
+    <dimen name="padding_info">64dp</dimen>
     <dimen name="expand_size">32dp</dimen>
     <dimen name="fab_size">48dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="video_min_height">200dp</dimen>
+
+    <dimen name="item_text_size">16sp</dimen>
 </resources>

@@ -8,4 +8,5 @@
     <string name="title_artists">음악가</string>
     <string name="title_date">공연날짜</string>
     <string name="title_venues">공연장</string>
+    <string name="msg_empty_event">아직 이 날의 공연을\n찾지 못했어요.</string>
 </resources>

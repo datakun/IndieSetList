@@ -66,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundleVenue = new Bundle();
 
-        mDateFragment = DateFragment.newInstance(bundleDate);
         mArtistFragment = ArtistFragment.newInstance(bundleArtist);
         mVenueFragment = VenueFragment.newInstance(bundleVenue);
+        mDateFragment = DateFragment.newInstance(bundleDate);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(mDateFragment);
         adapter.addFragment(mArtistFragment);
         adapter.addFragment(mVenueFragment);
+        adapter.addFragment(mDateFragment);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
 
@@ -105,15 +105,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.navigation_date:
+                    case R.id.navigation_artists:
                         viewPager.setCurrentItem(0);
 
                         return true;
-                    case R.id.navigation_artists:
+                    case R.id.navigation_venues:
                         viewPager.setCurrentItem(1);
 
                         return true;
-                    case R.id.navigation_venues:
+                    case R.id.navigation_date:
                         viewPager.setCurrentItem(2);
 
                         return true;
@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         // DB 데이터 조회
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        // 공연 정보 가져오기
         db.collection(App.ARGS_EVENTS)
                 .orderBy("date", Query.Direction.DESCENDING)
                 .get()

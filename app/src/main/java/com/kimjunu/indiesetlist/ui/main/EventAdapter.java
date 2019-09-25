@@ -46,11 +46,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
         @BindView(R.id.cardEvent)
         CardView cardEvent;
 
-        @BindView(R.id.tvDate)
-        TextView tvDate;
-
-        @BindView(R.id.tvVenue)
-        TextView tvVenue;
+        @BindView(R.id.tvDateVenue)
+        TextView tvDateVenue;
 
         @BindView(R.id.layoutArtists)
         FlowLayout layoutArtists;
@@ -106,7 +103,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                                     Log.e(TAG, "Error getting documents.", task.getException());
                                 }
 
-                                String eventTitle = tvDate.getText().toString() + ", " + tvVenue.getText().toString();
+                                String eventTitle = tvDateVenue.getText().toString();
                                 Intent intent = new Intent(mContext, PerformListActivity.class);
                                 intent.putExtra(App.ARGS_TITLE, eventTitle);
                                 intent.putExtra(App.ARGS_PERFORM_LIST, performList);
@@ -136,8 +133,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     public void onBindViewHolder(@NonNull EventViewHolder holder, int position) {
         EventModel event = mEventList.get(position);
 
-        holder.tvDate.setText(DateTimeFormat.forPattern("yyyy년 M월 d일").print(event.date));
-        holder.tvVenue.setText(event.venue.name);
+        String dateVenueString = DateTimeFormat.forPattern("yyyy년 M월 d일").print(event.date) + ", " + event.venue.name;
+        holder.tvDateVenue.setText(dateVenueString);
         holder.layoutArtists.removeAllViews();
 
         for (ArtistModel artist : event.artists) {

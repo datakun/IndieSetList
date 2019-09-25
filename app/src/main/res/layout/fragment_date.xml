@@ -4,28 +4,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layoutEventList"
+    <TextView
+        android:id="@+id/tvDate"
+        style="@style/TitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/view_margin"
+        android:text="2019년 9월 19일"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvEmptyEvent"
+        style="@style/InfoTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/padding_info"
+        android:text="@string/msg_empty_event"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/colorOpacity"
+        android:elevation="6dp"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/tvDate"
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/view_margin"
-            style="@style/TitleText"
-            android:text="2019년 9월 19일"/>
+            android:background="@android:color/white"
+            app:headerColor="@color/colorPrimary"
+            app:eventsEnabled="true"
+            app:headerLabelColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:selectionColor="@color/colorPrimaryDark"
+            app:todayLabelColor="@color/colorAccent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvEvent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.recyclerview.widget.RecyclerView>
-
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvEvent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCalendar"
@@ -37,25 +72,5 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorOpacity"
-        android:elevation="6dp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <CalendarView
-            android:id="@+id/calendarView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

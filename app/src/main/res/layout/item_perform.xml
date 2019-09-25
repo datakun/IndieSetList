@@ -19,6 +19,7 @@
 
             <TextView
                 android:id="@+id/tvTitle"
+                style="@style/ItemTitleText2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="김사월 - 붉은 늑대 (19.07.06 「붉은 늑대」 발매 기념 공연)"
@@ -29,10 +30,10 @@
                 android:id="@+id/tvArtist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/text_margin"
                 android:layout_marginTop="@dimen/view_margin"
-                android:visibility="invisible"
+                android:layout_marginRight="@dimen/text_margin"
                 android:text="김사월"
+                android:visibility="invisible"
                 app:layout_constraintRight_toLeftOf="@+id/tvVenue"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
@@ -40,8 +41,8 @@
                 android:id="@+id/tvVenue"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_marginTop="@dimen/view_margin"
+                android:gravity="right"
                 android:text="현대카드 언더스테이지"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitle" />

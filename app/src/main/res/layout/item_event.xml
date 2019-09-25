@@ -14,24 +14,16 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_margin="@dimen/view_margin"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/view_margin">
 
             <TextView
-                android:id="@+id/tvDate"
+                android:id="@+id/tvDateVenue"
+                style="@style/ItemTitleText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="2019년 9월 19일"
+                android:text="2019년 9월 19일, 올림픽공원"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvVenue"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/text_margin"
-                android:text="올림픽공원"
-                app:layout_constraintLeft_toRightOf="@+id/tvDate"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.nex3z.flowlayout.FlowLayout
@@ -45,7 +37,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDate">
+                app:layout_constraintTop_toBottomOf="@+id/tvDateVenue">
 
             </com.nex3z.flowlayout.FlowLayout>
 

@@ -1,10 +1,11 @@
 package com.kimjunu.indiesetlist.ui.main;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CalendarView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.kimjunu.indiesetlist.App;
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.kimjunu.indiesetlist.R;
 import com.kimjunu.indiesetlist.model.EventModel;
 
@@ -22,25 +25,30 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DateFragment extends Fragment implements CalendarView.OnDateChangeListener {
+public class DateFragment extends Fragment {
     private static final String TAG = "DateFragment";
+
+    @BindView(R.id.tvEmptyEvent)
+    TextView tvEmptyEvent;
 
     @BindView(R.id.rvEvent)
     RecyclerView rvEvent;
-
-    @BindView(R.id.calendarView)
-    CalendarView calendarView;
 
     @BindView(R.id.layoutCalendar)
     ConstraintLayout layoutCalendar;
 
     @BindView(R.id.tvDate)
     TextView tvDate;
+
+    @BindView(R.id.calendarView)
+    CalendarView calendarView;
 
     EventAdapter mEventAdapter = null;
 
@@ -78,7 +86,11 @@ public class DateFragment extends Fragment implements CalendarView.OnDateChangeL
         mEventAdapter = new EventAdapter();
         rvEvent.setAdapter(mEventAdapter);
 
-        calendarView.setOnDateChangeListener(this);
+        calendarView.setOnDayClickListener(eventDay -> {
+            DateTime datetime = new DateTime(eventDay.getCalendar().getTime());
+            Log.e(TAG, datetime.toString());
+            updateEventList(datetime);
+        });
 
         updateEventList(new DateTime());
 
@@ -87,6 +99,17 @@ public class DateFragment extends Fragment implements CalendarView.OnDateChangeL
 
     public void setEventList(ArrayList<EventModel> itemList) {
         mEventList = itemList;
+
+        // 달력 업데이트
+        ArrayList<EventDay> events = new ArrayList<>();
+
+        for (EventModel event : mEventList) {
+            DateTime date = new DateTime(event.date);
+            Calendar calendar = date.toCalendar(Locale.getDefault());
+            events.add(new EventDay(calendar, R.drawable.ic_queue_music_black_24dp));
+        }
+
+        calendarView.setEvents(events);
 
         updateEventList(new DateTime());
     }
@@ -103,6 +126,14 @@ public class DateFragment extends Fragment implements CalendarView.OnDateChangeL
             }
         }
 
+        if (eventList.isEmpty()) {
+            tvEmptyEvent.setVisibility(View.VISIBLE);
+            rvEvent.setVisibility(View.INVISIBLE);
+        } else {
+            tvEmptyEvent.setVisibility(View.INVISIBLE);
+            rvEvent.setVisibility(View.VISIBLE);
+        }
+
         mEventAdapter.setEventList(eventList);
         mEventAdapter.notifyDataSetChanged();
 
@@ -115,17 +146,14 @@ public class DateFragment extends Fragment implements CalendarView.OnDateChangeL
 
     @OnClick(R.id.fabCalendar)
     public void onFabCalendarClicked() {
-        layoutCalendar.setVisibility(View.VISIBLE);
+        if (layoutCalendar.getVisibility() == View.GONE)
+            layoutCalendar.setVisibility(View.VISIBLE);
+        else
+            layoutCalendar.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.layoutCalendar)
     public void onLayoutCalendarClicked() {
         layoutCalendar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
-        DateTime datetime = new DateTime(year + "-" + (month + 1) + "-" + dayOfMonth);
-        updateEventList(datetime);
     }
 }
