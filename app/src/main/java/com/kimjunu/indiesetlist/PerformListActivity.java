@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +39,9 @@ public class PerformListActivity extends YouTubeBaseActivity
     private static final String TAG = "PerformListActivity";
     private static final int RECOVERY_DIALOG_REQUEST = 1;
 
+    @BindView(R.id.tvEmptyPerform)
+    TextView tvEmptyPerform;
+
     @BindView(R.id.tvTitle)
     TextView tvTitle;
 
@@ -45,7 +49,7 @@ public class PerformListActivity extends YouTubeBaseActivity
     RecyclerView rvPerform;
 
     @BindView(R.id.layoutPerformList)
-    LinearLayout layoutPerformList;
+    ConstraintLayout layoutPerformList;
 
     @BindView(R.id.layoutVideo)
     FlingLinearLayout layoutVideo;
@@ -66,13 +70,14 @@ public class PerformListActivity extends YouTubeBaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
+        setContentView(R.layout.activity_perform_list);
 
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
 
         String eventTitle = intent.getStringExtra(App.ARGS_TITLE);
+        boolean isFromEvent = intent.getBooleanExtra(App.ARGS_IS_FROM_EVENT, false);
 
         tvTitle.setText(eventTitle);
 
@@ -118,6 +123,14 @@ public class PerformListActivity extends YouTubeBaseActivity
         layoutVideo.setVisibility(View.INVISIBLE);
 
         youTubePlayerView.initialize(Developer.ANDROID_KEY, this);
+
+        if (isFromEvent == true && performList.isEmpty()) {
+            tvEmptyPerform.setVisibility(View.VISIBLE);
+            rvPerform.setVisibility(View.INVISIBLE);
+        } else {
+            tvEmptyPerform.setVisibility(View.INVISIBLE);
+            rvPerform.setVisibility(View.VISIBLE);
+        }
 
         layout();
 

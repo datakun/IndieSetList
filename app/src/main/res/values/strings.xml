@@ -9,5 +9,6 @@
 
     <string name="msg_exiting">Press the \'Back\' button one more time to exit this app.</string>
     <string name="msg_error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
-    <string name="msg_empty_event">Haven\'t found\nthat day\'s performance yet.</string>
+    <string name="msg_empty_gig">Haven\'t found\nthat day\'s gig yet.</string>
+    <string name="msg_empty_gig_video">Haven\'t found\nthat gig\'s video yet.</string>
 </resources>

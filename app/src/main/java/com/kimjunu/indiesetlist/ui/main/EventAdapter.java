@@ -107,6 +107,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
                                 Intent intent = new Intent(mContext, PerformListActivity.class);
                                 intent.putExtra(App.ARGS_TITLE, eventTitle);
                                 intent.putExtra(App.ARGS_PERFORM_LIST, performList);
+                                intent.putExtra(App.ARGS_IS_FROM_EVENT, true);
 
                                 mContext.startActivity(intent);
                             }
