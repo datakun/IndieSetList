@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Indie SetList</string>
+    <string name="app_name">인디 셋리스트</string>
     <string name="msg_enter_artist_name">음악가 이름을 입력하세요.</string>
     <string name="msg_enter_venue_name">공연장 이름을 입력하세요.</string>
     <string name="msg_error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
