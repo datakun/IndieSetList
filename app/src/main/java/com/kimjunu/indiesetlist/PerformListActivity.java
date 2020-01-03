@@ -98,7 +98,7 @@ public class PerformListActivity extends YouTubeBaseActivity
             artistSection.setOnPerformSelectListener(new PerformAdapter.OnPerformSelectListener() {
                 @Override
                 public void onPerformSelected(PerformModel perform) {
-                    Log.e(TAG, perform.videoId + ", " + perform.videoTitle);
+//                    Log.e(TAG, perform.videoId + ", " + perform.videoTitle);
 
                     if (youTubePlayer != null)
                         youTubePlayer.loadVideo(perform.videoId);

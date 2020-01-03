@@ -10,4 +10,5 @@
     <string name="title_venues">공연장</string>
     <string name="msg_empty_gig">아직 이 날의\n공연을 찾지 못했어요.</string>
     <string name="msg_empty_gig_video">아직 이 공연의\n영상을 찾지 못했어요.</string>
+    <string name="msg_feeling_lucky">I\'m Feeling Lucky</string>
 </resources>

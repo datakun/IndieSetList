@@ -11,4 +11,5 @@
     <string name="msg_error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
     <string name="msg_empty_gig">Haven\'t found\nthat day\'s gig yet.</string>
     <string name="msg_empty_gig_video">Haven\'t found\nthat gig\'s video yet.</string>
+    <string name="msg_feeling_lucky">I\'m Feeling Lucky</string>
 </resources>

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,9 @@ public class DateFragment extends Fragment {
 
     @BindView(R.id.tvEmptyEvent)
     TextView tvEmptyEvent;
+
+    @BindView(R.id.layoutEmptyEvent)
+    LinearLayout layoutEmptyEvent;
 
     @BindView(R.id.rvEvent)
     RecyclerView rvEvent;
@@ -127,10 +131,10 @@ public class DateFragment extends Fragment {
         }
 
         if (eventList.isEmpty()) {
-            tvEmptyEvent.setVisibility(View.VISIBLE);
+            layoutEmptyEvent.setVisibility(View.VISIBLE);
             rvEvent.setVisibility(View.INVISIBLE);
         } else {
-            tvEmptyEvent.setVisibility(View.INVISIBLE);
+            layoutEmptyEvent.setVisibility(View.INVISIBLE);
             rvEvent.setVisibility(View.VISIBLE);
         }
 
@@ -155,5 +159,13 @@ public class DateFragment extends Fragment {
     @OnClick(R.id.layoutCalendar)
     public void onLayoutCalendarClicked() {
         layoutCalendar.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.btnFeelingLucky)
+    public void onFeelingLuckyClicked() {
+        int eventIndex = (int)(Math.random() * mEventList.size());
+
+        DateTime eventDate = mEventList.get(eventIndex).date;
+        updateEventList(eventDate);
     }
 }
